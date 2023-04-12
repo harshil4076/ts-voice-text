@@ -1,37 +1,60 @@
-import type { V2_MetaFunction } from "@remix-run/react";
-import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import { useState, useEffect, useRef } from 'react';
 
-export const meta: V2_MetaFunction = () => {
-  return [{ title: "New Remix App" }];
-};
-//Use web speech API to receive speech input and convert it to text
+const SpeechToText: React.FC = () => {
+  const [transcript, setTranscript] = useState('');
+  const [isListening, setIsListening] = useState(false);
+  const recognitionRef = useRef<SpeechRecognition | null>(null);
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      recognitionRef.current = new window.webkitSpeechRecognition();
+      recognitionRef.current.continuous = true;
+      recognitionRef.current.interimResults = true;
+      recognitionRef.current.lang = 'en-US';
 
-export default function Index() {
-  const {
-    transcript,
-    listening,
-    resetTranscript,
-    browserSupportsSpeechRecognition,
-  } = useSpeechRecognition();
+      recognitionRef.current.onresult = (event: SpeechRecognitionEvent) => {
+        const transcript = Array.from(event.results)
+          .map((result) => result[0])
+          .map((result) => result.transcript)
+          .join('');
 
-  if (!browserSupportsSpeechRecognition) {
-    return <span>Browser doesn't support speech recognition.</span>;
-  }
-  const startListening = () => {
-    SpeechRecognition.startListening({ continuous: true });
-  };
-  const stopListening = () => {
-    SpeechRecognition.stopListening();
+        setTranscript(transcript);
+      };
+
+      recognitionRef.current.onend = () => {
+        setIsListening(false);
+      };
+    }
+  }, []);
+
+  const toggleListening = () => {
+    if (!isListening) {
+      setIsListening(true);
+      recognitionRef.current?.start();
+    } else {
+      setIsListening(false);
+      recognitionRef.current?.stop();
+    }
   };
 
   return (
-    <>
-    <div className="text-4xl text-center">Welcome to Speech to Text</div>
-    <p>Microphone: {listening ? 'on' : 'off'}</p>
-     <button onClick={startListening}>Start</button>
-      <button onClick={stopListening}>Stop</button>
-       <button onClick={resetTranscript}>Reset</button>
-      <p>{transcript}</p>
-    </>);
-}
+    <div className="flex flex-col h-screen justify-center items-center">
+      <button
+        className={`px-4 py-2 rounded-lg text-white ${
+          isListening
+            ? 'bg-red-500 hover:bg-red-700'
+            : 'bg-blue-500 hover:bg-blue-700'
+        } focus:outline-none focus:shadow-outline`}
+        onClick={toggleListening}
+      >
+        {isListening ? 'Stop' : 'Ask'}
+      </button>
+      <p
+        className="my-4 border-2 border-gray-400 h-1/2 w-1/2 p-2 overflow-y-auto"
+      >
+      {transcript}</p>
+    </div>
+  );
+};
+
+export default SpeechToText;
