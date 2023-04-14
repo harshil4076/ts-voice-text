@@ -21,7 +21,7 @@ const SpeechToText: React.FC = () => {
   const [isListening, setIsListening] = useState(false);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
   const actionData = useActionData()
-  console.log(actionData?.data)
+
   useEffect(() => {
     //Only works in chrome
     if (typeof window !== 'undefined') {
@@ -57,6 +57,7 @@ const SpeechToText: React.FC = () => {
 
   return (
     <div className="flex flex-col h-screen justify-center items-center">
+      <p className='text-2xl font-medium text-slate-500'>Only works in Chrome!</p>
         <p
         className="my-4 bg-grey-100 h-1/3 w-1/2 p-2 overflow-y-auto"
           >{actionData?.data}
