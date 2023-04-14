@@ -54,7 +54,9 @@ const SpeechToText: React.FC = () => {
       recognitionRef.current?.stop();
     }
   };
-
+  const handleInput= (event:any) => {
+    setTranscript(event.target.value)
+  }
   return (
     <div className="flex flex-col h-screen justify-center items-center">
       <p className='text-2xl font-medium text-slate-500'>Only works in Chrome!</p>
@@ -64,10 +66,13 @@ const SpeechToText: React.FC = () => {
       </p>
 
       <div className='m-4 flex w-full justify-center align-center'>
-      <p
+      <input
+        type="text"
+        value={transcript}
+        onInput={handleInput}
         className="border border-gray-400 rounded h-12 w-1/2 p-2 overflow-y-auto"
-      >
-      {transcript}</p>
+     />
+
       <button
         className={`mx-2 px-4 py-2 rounded-lg text-white h-12 ${
           isListening
