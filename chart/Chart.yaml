@@ -2,5 +2,5 @@ apiVersion: v2
 name: ts-voice-text
 description: A Helm chart for ts-voice-text
 type: application
-version: 0.0.3 #chart version
+version: 0.1 #chart version
 appVersion: "0.0.1" #app version
