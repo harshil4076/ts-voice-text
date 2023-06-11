@@ -1,0 +1,13 @@
+appName: tsVoiceText
+
+namespace: default
+env:
+  NODE_ENV: "development"
+image:
+    name: ghcr.io/harshil4076/ts-voice-text/server
+    tag: b21a1741327f6291a4bdbbe032f4cbbedcc6c794
+imageCredentials:
+  registry: https://ghcr.io
+  username: githubusername
+  password: githubtoken
+  email: github@email.com
