@@ -2,8 +2,8 @@ name: ts-voice-text - Create and publish a Docker image for Remix app.
 
 on:
   push:
-    branches:
-      - main
+    tags:
+      - 'v-*.*.*'
 
 env:
   REGISTRY: ghcr.io
