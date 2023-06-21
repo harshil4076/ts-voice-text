@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  ts-voice-text:
+  - apiVersion: v2
+    appVersion: 0.0.2
+    created: "2023-06-21T13:14:31.464324875Z"
+    description: A Helm chart for ts-voice-text
+    digest: 1ff5f8f7edf3b4b9d5ce8b8970fb3c5a9eb394b336502192bab5943dac104860
+    name: ts-voice-text
+    type: application
+    urls:
+    - https://github.com/harshil4076/ts-voice-text/releases/download/ts-voice-text-0.2.2/ts-voice-text-0.2.2.tgz
+    version: 0.2.2
+generated: "2023-06-21T13:14:31.464329075Z"
